@@ -1,0 +1,59 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#A11A1D"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:padding="10dp"
+
+    >
+
+
+    <EditText
+        android:id="@+id/et_email"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:hint="Email"
+        android:textColorHint="#FFFF" />
+
+    <EditText
+        android:id="@+id/et_contraseña"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:hint="Contraseña"
+        android:textColorHint="#FFFF" />
+
+    <Button
+        android:id="@+id/bt_iniciarSesion"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:text="Iniciar sesión" />
+
+    <Button
+        android:id="@+id/bt_sinRegistro"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Continuar sin registro" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="¿No tienes una cuenta?"
+        android:textAlignment="center"
+        android:textColor="#FFFF"
+        android:layout_marginTop="50dp"
+
+        />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Registrate"
+        android:textAlignment="center"
+        android:textColor="#FFFF" />
+
+
+</LinearLayout>
