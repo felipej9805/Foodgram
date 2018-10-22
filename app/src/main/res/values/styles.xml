@@ -8,4 +8,31 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <!-- Estilo para los botones del login-->
+    <style name="style_botonesLogin">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@drawable/redondear_blanco</item>
+        <item name="android:layout_marginLeft">50dp</item>
+        <item name="android:layout_marginRight">50dp</item>
+        <item name="android:textColor">@color/colorRojoApp</item>
+        <item name="android:textSize">18dp</item>
+    </style>
+
+    <!--Estilo para los TextView del login-->
+    <style name="style_textViewLogin">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textAlignment">center</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">15dp</item>
+        <item name="android:textColor">@color/colorBlanco</item>
+
+
+    </style>
+
+
+        <!--
+
+        -->
 </resources>

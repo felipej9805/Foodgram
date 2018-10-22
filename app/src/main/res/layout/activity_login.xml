@@ -1,12 +1,18 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+    android:id="@+id/ly_login"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#A11A1D"
+    android:background="@color/colorRojoApp"
     android:gravity="center"
     android:orientation="vertical"
-    android:padding="10dp"
-    >
+    android:padding="10dp">
 
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/logo" />
 
     <EditText
         android:id="@+id/et_email"
@@ -14,7 +20,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:hint="Email"
-        android:textColorHint="#FFFF" />
+        android:textColorHint="@color/colorAccent" />
 
     <EditText
         android:id="@+id/et_contraseña"
@@ -26,33 +32,36 @@
 
     <Button
         android:id="@+id/bt_iniciarSesion"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
+        style="@style/style_botonesLogin"
+        android:layout_marginTop="20dp"
         android:text="Iniciar sesión" />
 
     <Button
         android:id="@+id/bt_sinRegistro"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        style="@style/style_botonesLogin"
+        android:layout_marginTop="10dp"
         android:text="Continuar sin registro" />
 
-    <TextView
+    <Button
+
+        style="@style/style_botonesLogin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="¿No tienes una cuenta?"
-        android:textAlignment="center"
-        android:textColor="#FFFF"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="10dp"
+        android:text="Aqui va el boton de FB"
 
         />
 
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Registrate"
-        android:textAlignment="center"
-        android:textColor="#FFFF" />
+        style="@style/style_textViewLogin"
+        android:layout_marginTop="20dp"
+        android:text="¿No tienes una cuenta?" />
+
+    <TextView
+        android:id="@+id/tv_registrate"
+        style="@style/style_textViewLogin"
+        android:layout_marginTop="5dp"
+        android:text="Registrate" />
 
 
 </LinearLayout>
