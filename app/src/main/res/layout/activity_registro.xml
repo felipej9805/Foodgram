@@ -1,69 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout android:layout_width="match_parent"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
+    android:background="@color/colorBlanco"
     android:gravity="center"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    android:orientation="vertical">
 
     <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Nombre"
-       android:layout_margin="30dp"
-        />
+        android:id="@+id/et_regisNombre"
+        style="@style/style_tvRegistros"
+        android:hint="Nombre" />
 
     <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Email"
-        android:layout_margin="30dp"
-        />
+        android:id="@+id/et_regisCorreo"
+        style="@style/style_tvRegistros"
+        android:hint="Email" />
 
     <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Contraseña"
-        android:layout_margin="30dp"
-        />
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Confirmar contraseña"
-        android:layout_margin="30dp"
-        />
-<LinearLayout
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:orientation="horizontal">
+        android:id="@+id/et_regisContrasena"
+        style="@style/style_tvRegistros"
+        android:hint="Contraseña" />
 
-    <CheckBox
+    <EditText
+        android:id="@+id/et_regisConfirContrasena"
+        style="@style/style_tvRegistros"
+        android:hint="Confirmar contraseña" />
+
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        />
+        android:layout_marginTop="40dp"
+        android:background="@color/colorBlanco"
+        android:orientation="horizontal">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Aceptar terminos y condiciones"
-        android:textSize="20sp"/>
+        <CheckBox
+            android:id="@+id/cb_terminos"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
 
-</LinearLayout>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Aceptar terminos y condiciones"
+            android:textColor="#000000"
+            android:textSize="20sp" />
+
+    </LinearLayout>
 
     <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Registrarme"
-        android:background="@color/colorAccent"/>
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@color/colorAccent"
+        android:id="@+id/bt_registrarme"
+        style="@style/style_botonesRegistro"
         android:layout_marginTop="20dp"
+        android:text="Registrarme" />
+
+    <Button
+        android:id="@+id/bt_cancelar"
         android:text="Cancelar"
+        android:layout_marginTop="20dp"
+        style="@style/style_botonesRegistro"
+
+
         />
-
-
 
 
 </LinearLayout>
