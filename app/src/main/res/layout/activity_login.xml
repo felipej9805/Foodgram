@@ -61,6 +61,9 @@
         android:id="@+id/tv_registrate"
         style="@style/style_textViewLogin"
         android:layout_marginTop="5dp"
+        android:clickable="true"
+
+        android:onClick="OnClick_registrarse"
         android:text="Registrate" />
 
 
