@@ -1,6 +1,7 @@
 package com.example.felipe.foodgram;
 
 import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -13,7 +14,11 @@ import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import com.example.felipe.foodgram.modelo.Usuario;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 public class Registro extends AppCompatActivity {
@@ -62,17 +67,61 @@ public class Registro extends AppCompatActivity {
 
                 comprobarDatos();
 
-                String nombre = et_regisNombre.getText().toString();
-                String correo = et_regisCorreo.getText().toString();
-                String contrasena = et_regisContrasena.getText().toString();
-                String confirContra = et_regisConfirContrasena.getText().toString();
-                int rgTipo = rgRegisTipo.getCheckedRadioButtonId();
-                boolean terminos = cb_terminos.isChecked();
+                final String nombre = et_regisNombre.getText().toString();
+                final String correo = et_regisCorreo.getText().toString();
+                final String contrasena = et_regisContrasena.getText().toString();
+                final String confirContra = et_regisConfirContrasena.getText().toString();
+                boolean chef = rb_soyChef.isChecked();
+                boolean cocinero = rb_soyCocinero.isChecked();
+                final boolean terminos = cb_terminos.isChecked();
+
+
+                if (chef) {
+
+                    Usuario usuario = new Usuario("", "chef", nombre, correo);
+                    registrarUsuario(usuario);
+                } else if (cocinero) {
+                    Usuario usuario = new Usuario("", "cocinero", nombre, correo);
+                    registrarUsuario(usuario);
+                }
+
 
             }
         });
 
 
+    }
+
+    //Este metodo se encarga de registrar a un usuario a Firebase
+    public void registrarUsuario(final Usuario usuario) {
+
+
+        auth.createUserWithEmailAndPassword(usuario.getEmail(), et_regisContrasena.getText().toString()).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+                if (task.isSuccessful()) {
+                    Toast.makeText(Registro.this, "Registro exitoso", Toast.LENGTH_SHORT).show();
+                    usuario.setUid(auth.getCurrentUser().getUid());
+
+                    if (rb_soyCocinero.isChecked()) {
+                        DatabaseReference reference = db.getReference().child("usuarios").child("cocinero").child(usuario.getUid());
+                        reference.setValue(usuario);
+                    } else if (rb_soyChef.isChecked()) {
+                        DatabaseReference reference = db.getReference().child("usuarios").child("chef").child(usuario.getUid());
+                        reference.setValue(usuario);
+                    }
+
+                    Intent i = new Intent(Registro.this, Inicio.class);
+                    startActivity(i);
+                    finish();
+
+                } else {
+                    Toast.makeText(Registro.this, "" + task.getException(), Toast.LENGTH_SHORT).show();
+
+                }
+
+            }
+        });
     }
 
 
@@ -83,6 +132,9 @@ public class Registro extends AppCompatActivity {
         String contrasena = et_regisContrasena.getText().toString();
         String confirContra = et_regisConfirContrasena.getText().toString();
         int rgTipo = rgRegisTipo.getCheckedRadioButtonId();
+        boolean chef = rb_soyChef.isChecked();
+        boolean cocinero = rb_soyCocinero.isChecked();
+
         boolean terminos = cb_terminos.isChecked();
 
         if (nombre != null && !nombre.isEmpty() && correo != null && !correo.isEmpty() && contrasena != null && !contrasena.isEmpty()
@@ -153,6 +205,7 @@ public class Registro extends AppCompatActivity {
                             rgTipo + "-" +
                             terminos
             );
+
             return;
 
         }
