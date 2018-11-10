@@ -3,10 +3,14 @@ package com.example.felipe.foodgram;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
+import android.widget.Toast;
 
 import com.example.felipe.foodgram.modelo.Usuario;
 import com.google.firebase.auth.FirebaseAuth;
@@ -20,6 +24,10 @@ public class Registro extends AppCompatActivity {
     EditText et_regisConfirContrasena;
     CheckBox cb_terminos;
 
+    RadioGroup rgRegisTipo;
+    RadioButton rb_soyCocinero;
+    RadioButton rb_soyChef;
+
     Button bt_registrarme;
     Button bt_cancelar;
 
@@ -32,8 +40,11 @@ public class Registro extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registro);
 
-//Metodo que se encarga de inicializar los elementos
+        //Metodo que se encarga de inicializar los elementos
         inicializarElementos();
+
+        db = FirebaseDatabase.getInstance();
+        auth = FirebaseAuth.getInstance();
 
         bt_cancelar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -45,14 +56,18 @@ public class Registro extends AppCompatActivity {
         });
 
 
-        db = FirebaseDatabase.getInstance();
-        auth = FirebaseAuth.getInstance();
-
         bt_registrarme.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
+                comprobarDatos();
 
+                String nombre = et_regisNombre.getText().toString();
+                String correo = et_regisCorreo.getText().toString();
+                String contrasena = et_regisContrasena.getText().toString();
+                String confirContra = et_regisConfirContrasena.getText().toString();
+                int rgTipo = rgRegisTipo.getCheckedRadioButtonId();
+                boolean terminos = cb_terminos.isChecked();
 
             }
         });
@@ -61,19 +76,110 @@ public class Registro extends AppCompatActivity {
     }
 
 
+    //Metodo que comprueba que los datos esten bien ingresados
+    public void comprobarDatos() {
+        String nombre = et_regisNombre.getText().toString();
+        String correo = et_regisCorreo.getText().toString();
+        String contrasena = et_regisContrasena.getText().toString();
+        String confirContra = et_regisConfirContrasena.getText().toString();
+        int rgTipo = rgRegisTipo.getCheckedRadioButtonId();
+        boolean terminos = cb_terminos.isChecked();
+
+        if (nombre != null && !nombre.isEmpty() && correo != null && !correo.isEmpty() && contrasena != null && !contrasena.isEmpty()
+                && confirContra != null && !confirContra.isEmpty()
+                && rgTipo != -1) {
+
+            if (contrasena.length() > 5) {
+
+                if (contrasena.equals(confirContra)) {
+
+                    if (terminos == true) {
+                        Toast.makeText(getApplicationContext(), "TODO CORRECTO", Toast.LENGTH_SHORT).show();
+
+                    } else {
+                        Toast.makeText(getApplicationContext(), "Debe aceptar terminos y condiciones", Toast.LENGTH_SHORT).show();
+                        Log.e("terminos", "Debe aceptar terminos y condiciones");
+                        Log.e("terminos",
+                                nombre + "-" +
+                                        correo + "-" +
+                                        contrasena + "-" +
+                                        confirContra + "-" +
+                                        rgTipo + "-" +
+                                        terminos
+                        );
+                        return;
+                    }
+
+
+                } else {
+                    Toast.makeText(getApplicationContext(), "Las contraseñas no coinciden", Toast.LENGTH_SHORT).show();
+                    Log.e("iguales", "Las contraseñas no coinciden");
+                    Log.e("iguales",
+                            nombre + "-" +
+                                    correo + "-" +
+                                    contrasena + "-" +
+                                    confirContra + "-" +
+                                    rgTipo + "-" +
+                                    terminos
+                    );
+                    return;
+                }
+            } else {
+                Toast.makeText(getApplicationContext(), "La contraseña debe ser de longitud 6 o mayor", Toast.LENGTH_SHORT).show();
+                Log.e(">6", "La contraseña debe ser de longitud 6 o mayor");
+
+
+                Log.e(">6",
+                        nombre + "-" +
+                                correo + "-" +
+                                contrasena + "-" +
+                                confirContra + "-" +
+                                rgTipo + "-" +
+                                terminos
+                );
+
+                return;
+            }
+
+
+        } else {
+            Toast.makeText(getApplicationContext(), "Por favor, ingrese todos los datos", Toast.LENGTH_LONG).show();
+            Log.e("datos", "Por favor, ingrese todos los datos");
+            Log.e("datos",
+                    nombre + "-" +
+                            correo + "-" +
+                            contrasena + "-" +
+                            confirContra + "-" +
+                            rgTipo + "-" +
+                            terminos
+            );
+            return;
+
+        }
+
+
+    }
+
+
     //Metodo que se encarga de inicializar los elementos del activity
     public void inicializarElementos() {
 
-        et_regisNombre = findViewById(R.id.et_regisNombre);
-        et_regisCorreo = findViewById(R.id.et_regisCorreo);
-        et_regisContrasena = findViewById(R.id.et_regisContrasena);
-        et_regisConfirContrasena = findViewById(R.id.et_regisConfirContrasena);
+        et_regisNombre = (EditText) findViewById(R.id.et_regisNombre);
+        et_regisCorreo = (EditText) findViewById(R.id.et_regisCorreo);
+        et_regisContrasena = (EditText) findViewById(R.id.et_regisContrasena);
+        et_regisConfirContrasena = (EditText) findViewById(R.id.et_regisConfirContrasena);
 
-        cb_terminos = findViewById(R.id.cb_terminos);
+        cb_terminos = (CheckBox) findViewById(R.id.cb_terminos);
 
-        bt_registrarme = findViewById(R.id.bt_registrarme);
+        rgRegisTipo = (RadioGroup) findViewById(R.id.rgRegisTipo);
+        rb_soyCocinero = (RadioButton) findViewById(R.id.rb_soyCocinero);
+        rb_soyChef = (RadioButton) findViewById(R.id.rb_soyChef);
 
-        bt_cancelar = findViewById(R.id.bt_cancelar);
+
+        bt_registrarme = (Button) findViewById(R.id.bt_registrarme);
+        bt_cancelar = (Button) findViewById(R.id.bt_cancelar);
 
     }
+
+
 }
