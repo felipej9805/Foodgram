@@ -61,6 +61,7 @@ public class Registro extends AppCompatActivity {
         });
 
 
+        //Boton que registra al usuario y guarda la información segun si es chef o cocinero
         bt_registrarme.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -74,10 +75,8 @@ public class Registro extends AppCompatActivity {
                 boolean chef = rb_soyChef.isChecked();
                 boolean cocinero = rb_soyCocinero.isChecked();
                 final boolean terminos = cb_terminos.isChecked();
-
-
+                
                 if (chef) {
-
                     Usuario usuario = new Usuario("", "chef", nombre, correo);
                     registrarUsuario(usuario);
                 } else if (cocinero) {

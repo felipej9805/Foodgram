@@ -16,21 +16,16 @@
 
     <EditText
         android:id="@+id/et_email"
-        android:hint="Email"
-        android:inputType="textEmailAddress"
         style="@style/style_EditTextLogin"
-        />
+        android:hint="Email"
+        android:inputType="textEmailAddress" />
 
     <EditText
         android:id="@+id/et_contraseña"
         android:hint="Contraseña"
         android:inputType="textPassword"
-
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:textColor="@color/colorBlanco"
-        android:textColorHint="@color/colorBlanco" />
+        style="@style/style_EditTextLogin"
+        />
 
     <Button
         android:id="@+id/bt_iniciarSesion"
@@ -44,16 +39,17 @@
         android:layout_marginTop="10dp"
         android:text="Continuar sin registro" />
 
-    <Button
 
-        style="@style/style_botonesLogin"
+    <com.facebook.login.widget.LoginButton
+        android:id="@+id/login_facebook"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:text="Aqui va el boton de FB"
+        android:layout_height="match_parent"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginLeft="50dp"
+        android:layout_marginRight="50dp"
+        android:layout_marginTop="30dp"
 
         />
-
     <TextView
         style="@style/style_textViewLogin"
         android:layout_marginTop="20dp"
@@ -64,9 +60,7 @@
         style="@style/style_textViewLogin"
         android:layout_marginTop="5dp"
         android:clickable="true"
-
         android:onClick="OnClick_registrarse"
         android:text="Registrate" />
-
 
 </LinearLayout>
