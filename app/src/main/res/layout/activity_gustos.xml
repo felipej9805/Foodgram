@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="15dp"
+        android:text="¿Qué no te gusta o no sueles comer?"
+        android:textColor="@color/colorRojoApp"
+        android:textSize="20sp" />
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="10dp"
+        android:text="CARNES"
+        android:textSize="15sp"
+        android:textStyle="bold" />
+
+    <CheckBox
+        android:id="@+id/checBox_Pollo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Pollo" />
+
+    <CheckBox
+        android:id="@+id/checBox_Cerdo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Cerdo" />
+
+    <CheckBox
+        android:id="@+id/checBox_Pescado"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Pescado" />
+
+    <CheckBox
+        android:id="@+id/checBox_Res"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Res" />
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="10dp"
+        android:text="VEGETALES"
+        android:textSize="15sp"
+        android:textStyle="bold" />
+
+    <CheckBox
+        android:id="@+id/checBox_Zanahoria"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Zanahoria" />
+
+    <CheckBox
+        android:id="@+id/checBox_Tomate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Tomate" />
+
+    <CheckBox
+        android:id="@+id/checBox_Cebolla"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Cebolla" />
+
+    <CheckBox
+        android:id="@+id/checBox_Lechuga"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Lechuga" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="10dp"
+        android:text="GRANOS"
+        android:textSize="15sp"
+        android:textStyle="bold" />
+
+    <CheckBox
+        android:id="@+id/checBox_Frijol"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Frijol" />
+
+    <CheckBox
+        android:id="@+id/checBox_Lentejas"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Lentejas" />
+
+    <CheckBox
+        android:id="@+id/checBox_Garbanzos"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Garbanzos" />
+
+    <CheckBox
+        android:id="@+id/checBox_Arvejas"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Arvejas" />
+
+
+    <Button
+        style="@style/style_botonesRojos"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:text="CONTINUAR"
+
+        />
+
+
+</LinearLayout>
+

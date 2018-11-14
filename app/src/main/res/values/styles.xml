@@ -19,6 +19,16 @@
         <item name="android:textSize">18dp</item>
     </style>
 
+    <style name="style_botonesRojos">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@drawable/redondear_rojo</item>
+        <item name="android:layout_marginLeft">50dp</item>
+        <item name="android:layout_marginRight">50dp</item>
+        <item name="android:textColor">@color/colorBlanco</item>
+        <item name="android:textSize">18dp</item>
+    </style>
+
     <!--Estilo para los TextView del login-->
     <style name="style_textViewLogin">
         <item name="android:layout_width">match_parent</item>
