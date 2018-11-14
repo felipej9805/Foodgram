@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "430971390189",
+    "firebase_url": "https://foodgram-697c7.firebaseio.com",
+    "project_id": "foodgram-697c7",
+    "storage_bucket": "foodgram-697c7.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:430971390189:android:5f98e4dab324c56b",
+        "android_client_info": {
+          "package_name": "com.example.felipe.foodgram"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "430971390189-3r7u18o4kva9l6fptunlajtnig6a8u1d.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.felipe.foodgram",
+            "certificate_hash": "a57bddbb672c811c5eb8215616e820f7a50a4345"
+          }
+        },
+        {
+          "client_id": "430971390189-pjdtsdl0ggcqugde6nt99abhsvc9eea4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyATzmzyGVJ-BN64v_fBAIy_zIaiBYpRxwE"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "430971390189-pjdtsdl0ggcqugde6nt99abhsvc9eea4.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
