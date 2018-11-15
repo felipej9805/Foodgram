@@ -137,7 +137,7 @@ public class Registro extends AppCompatActivity {
         boolean terminos = cb_terminos.isChecked();
 
         if (nombre != null && !nombre.isEmpty() && correo != null && !correo.isEmpty() && contrasena != null && !contrasena.isEmpty()
-                && confirContra != null && !confirContra.isEmpty()
+                && confirContra != null && !confirContra.isEmpty()&&terminos
                 && rgTipo != -1) {
 
             if (contrasena.length() > 5) {

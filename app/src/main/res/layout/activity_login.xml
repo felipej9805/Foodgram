@@ -30,7 +30,7 @@
     <Button
         android:id="@+id/bt_iniciarSesion"
         style="@style/style_botonesLogin"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         android:text="Iniciar sesión" />
 
     <Button
@@ -47,7 +47,7 @@
         android:layout_gravity="center_horizontal"
         android:layout_marginLeft="50dp"
         android:layout_marginRight="50dp"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="10dp"
 
         />
     <TextView

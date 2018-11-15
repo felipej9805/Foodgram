@@ -158,7 +158,7 @@ public class Login extends AppCompatActivity {
 
 
                 } else {
-                    Toast.makeText(Login.this, "Error", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Login.this, "Error en el correo y/o contraseña", Toast.LENGTH_SHORT).show();
                 }
             }
         });
