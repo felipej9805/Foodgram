@@ -43,7 +43,6 @@
             </intent-filter>
         </activity>
         <activity android:name=".Gustos" />
-        <activity android:name=".Categorias" />
         <activity
             android:name=".Inicio"
             android:label="@string/title_activity_inicio"

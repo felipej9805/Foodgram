@@ -3,6 +3,7 @@ package com.example.felipe.foodgram;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.FragmentManager;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -79,18 +80,25 @@ public class MenuNavegador extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
+        FragmentManager fmanager= getSupportFragmentManager();
 
         if (id == R.id.nav_camera) {
-            // Handle the camera action
+            fmanager.beginTransaction().replace(R.id.contenedor, new PerfilFragment()).commit();
+
         } else if (id == R.id.nav_gallery) {
+            fmanager.beginTransaction().replace(R.id.contenedor, new ChefFragment()).commit();
 
         } else if (id == R.id.nav_slideshow) {
+            fmanager.beginTransaction().replace(R.id.contenedor, new FeedFragment()).commit();
 
         } else if (id == R.id.nav_manage) {
+            fmanager.beginTransaction().replace(R.id.contenedor, new CanastaFragment()).commit();
 
         } else if (id == R.id.nav_share) {
-
+            fmanager.beginTransaction().replace(R.id.contenedor, new RecetaFragment()).commit();
         } else if (id == R.id.nav_send) {
+            fmanager.beginTransaction().replace(R.id.contenedor, new CategoriaFragment()).commit();
+
 
         }
 
