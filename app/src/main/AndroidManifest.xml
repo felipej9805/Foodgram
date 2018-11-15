@@ -47,10 +47,6 @@
             android:name=".Inicio"
             android:label="@string/title_activity_inicio"
             android:theme="@style/AppTheme" />
-        <activity
-            android:name=".MenuNavegador"
-            android:label="@string/title_activity_menu_navegador"
-            android:theme="@style/AppTheme"></activity>
     </application>
 
 </manifest>

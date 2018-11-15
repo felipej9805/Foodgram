@@ -98,6 +98,12 @@ obtenerDatosFacebook(object);
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        // se llama al fragment que se va a mostrar de primero
+        FragmentManager fmanager= getSupportFragmentManager();
+        fmanager.beginTransaction().replace(R.id.contenedor, new FeedFragment()).commit();
+
+
     }
 
     @Override
@@ -146,16 +152,18 @@ obtenerDatosFacebook(object);
             fmanager.beginTransaction().replace(R.id.contenedor, new ChefFragment()).commit();
 
         } else if (id == R.id.nav_slideshow) {
-            fmanager.beginTransaction().replace(R.id.contenedor, new FeedFragment()).commit();
-
-        } else if (id == R.id.nav_manage) {
             fmanager.beginTransaction().replace(R.id.contenedor, new CanastaFragment()).commit();
 
-        } else if (id == R.id.nav_share) {
+        } else if (id == R.id.nav_manage) {
             fmanager.beginTransaction().replace(R.id.contenedor, new RecetaFragment()).commit();
-        } else if (id == R.id.nav_send) {
+
+        } else if (id == R.id.nav_share) {
             fmanager.beginTransaction().replace(R.id.contenedor, new CategoriaFragment()).commit();
+
+        } else if (id == R.id.nav_send) {
+           // vacio
         }
+
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
