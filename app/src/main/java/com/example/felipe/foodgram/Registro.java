@@ -115,7 +115,8 @@ public class Registro extends AppCompatActivity {
                     finish();
 
                 } else {
-                    Toast.makeText(Registro.this, "" + task.getException(), Toast.LENGTH_SHORT).show();
+
+                 //   Toast.makeText(Registro.this, "" + task.getException(), Toast.LENGTH_SHORT).show();
 
                 }
 
@@ -137,7 +138,7 @@ public class Registro extends AppCompatActivity {
         boolean terminos = cb_terminos.isChecked();
 
         if (nombre != null && !nombre.isEmpty() && correo != null && !correo.isEmpty() && contrasena != null && !contrasena.isEmpty()
-                && confirContra != null && !confirContra.isEmpty()&&terminos
+                && confirContra != null && !confirContra.isEmpty()&& terminos == true
                 && rgTipo != -1) {
 
             if (contrasena.length() > 5) {

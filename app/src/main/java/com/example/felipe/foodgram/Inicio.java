@@ -78,7 +78,7 @@ public class Inicio extends AppCompatActivity
             request.executeAsync();
 
         } else {
-            Toast.makeText(getApplicationContext(), "Error Toast", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "BIENVENIDO", Toast.LENGTH_SHORT).show();
         }
 
 
