@@ -30,6 +30,7 @@ import com.squareup.picasso.Picasso;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -40,42 +41,45 @@ public class Inicio extends AppCompatActivity
 
     TextView prueba;
     ImageView img_facebook;
+    ImageView img_PerfilMenu;
+    TextView tv_CorreoMenu;
+    TextView tv_nombreUsuario;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_inicio);
 
-
- prueba = findViewById(R.id.prueba);
- img_facebook = (ImageView) findViewById(R.id.img_facebook);
-
-
- //Token del inicio de sesión
+        prueba = findViewById(R.id.prueba);
+        img_facebook = (ImageView) findViewById(R.id.img_facebook);
 
 
- AccessToken token = AccessToken.getCurrentAccessToken();
- if (token != null) {
+        //Token del inicio de sesión
 
- String accessToken = AccessToken.getCurrentAccessToken().getToken();
 
- GraphRequest request = GraphRequest.newMeRequest(AccessToken.getCurrentAccessToken(), new GraphRequest.GraphJSONObjectCallback() {
-@Override public void onCompleted(JSONObject object, GraphResponse response) {
+        AccessToken token = AccessToken.getCurrentAccessToken();
+        if (token != null) {
 
-Log.d("response", response.toString());
-obtenerDatosFacebook(object);
+            String accessToken = AccessToken.getCurrentAccessToken().getToken();
 
-}
-});
+            GraphRequest request = GraphRequest.newMeRequest(AccessToken.getCurrentAccessToken(), new GraphRequest.GraphJSONObjectCallback() {
+                @Override
+                public void onCompleted(JSONObject object, GraphResponse response) {
 
- Bundle parameters = new Bundle();
- parameters.putString("fields", "id,email,birthday,friends");
- request.setParameters(parameters);
- request.executeAsync();
+                    Log.d("response", response.toString());
+                    obtenerDatosFacebook(object);
 
- } else {
- Toast.makeText(getApplicationContext(), "Error Toast", Toast.LENGTH_SHORT).show();
- }
+                }
+            });
+
+            Bundle parameters = new Bundle();
+            parameters.putString("fields", "id,email,birthday,friends,first_name,last_name");
+            request.setParameters(parameters);
+            request.executeAsync();
+
+        } else {
+            Toast.makeText(getApplicationContext(), "Error Toast", Toast.LENGTH_SHORT).show();
+        }
 
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -100,7 +104,7 @@ obtenerDatosFacebook(object);
         navigationView.setNavigationItemSelectedListener(this);
 
         // se llama al fragment que se va a mostrar de primero
-        FragmentManager fmanager= getSupportFragmentManager();
+        FragmentManager fmanager = getSupportFragmentManager();
         fmanager.beginTransaction().replace(R.id.contenedor, new FeedFragment()).commit();
 
 
@@ -143,26 +147,32 @@ obtenerDatosFacebook(object);
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
-        FragmentManager fmanager= getSupportFragmentManager();
+        FragmentManager fmanager = getSupportFragmentManager();
 
-        if (id == R.id.nav_camera) {
+        if (id == R.id.nav_miPerfil) {
             fmanager.beginTransaction().replace(R.id.contenedor, new PerfilFragment()).commit();
 
-        } else if (id == R.id.nav_gallery) {
+        } else if (id == R.id.nav_miChef) {
             fmanager.beginTransaction().replace(R.id.contenedor, new ChefFragment()).commit();
 
-        } else if (id == R.id.nav_slideshow) {
+        } else if (id == R.id.nav_Feed) {
+            fmanager.beginTransaction().replace(R.id.contenedor, new FeedFragment()).commit();
+        } else if (id == R.id.nav_Canasta) {
             fmanager.beginTransaction().replace(R.id.contenedor, new CanastaFragment()).commit();
 
-        } else if (id == R.id.nav_manage) {
+        } else if (id == R.id.nav_RecetaParaTi) {
             fmanager.beginTransaction().replace(R.id.contenedor, new RecetaFragment()).commit();
 
-        } else if (id == R.id.nav_share) {
+        } else if (id == R.id.nav_Categorias) {
             fmanager.beginTransaction().replace(R.id.contenedor, new CategoriaFragment()).commit();
 
-        } else if (id == R.id.nav_send) {
-           // vacio
+        } else if (id == R.id.nav_Calificanos) {
+            //  fmanager.beginTransaction().replace(R.id.contenedor, new FeedFragment()).commit();
+        } else if (id == R.id.nav_CerrarSesion) {
+
+            cerrarSesion();
         }
+
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
@@ -171,40 +181,47 @@ obtenerDatosFacebook(object);
 
 
     //Este metodo se encarga de obtener los datos de Facebook, como el correo, fecha, imagen y cantidad de amigos
+    private void obtenerDatosFacebook(JSONObject object) {
+        try {
+            img_PerfilMenu = findViewById(R.id.img_PerfilMenu);
+            tv_CorreoMenu = findViewById(R.id.tv_CorreoMenu);
+            tv_nombreUsuario = findViewById(R.id.tv_nombreUsuario);
+
+            URL profile_picture = new URL("https://graph.facebook.com/" + object.get("id") + "/picture?width=150&height=150");
+            Picasso.get().load(profile_picture.toString()).into(img_PerfilMenu);
+
+            tv_nombreUsuario.setText(object.getString("first_name") + object.getString("last_name"));
+            tv_CorreoMenu.setText(object.getString("email"));
 
 
- private void obtenerDatosFacebook(JSONObject object) {
- try {
- URL profile_picture = new URL("https://graph.facebook.com/" + object.get("id") + "/picture?width=250&height=250");
- Picasso.get().load(profile_picture.toString()).into(img_facebook);
-
- //Mostramos la información de prueba en el Inicio
- prueba.setText("EMAIL : " + object.getString("email") + "\n" +
- "BIRTHDAY : " + object.getString("birthday") + "\n" +
- "FRIENDS : " + object.getJSONObject("friends").getJSONObject("summary").getString("total_count")
- );
-
- } catch (MalformedURLException e) {
- e.printStackTrace();
- } catch (JSONException e) {
- e.printStackTrace();
- }
- }
+            //Mostramos la información de prueba en el Inicio
+            /**
+             prueba.setText("EMAIL : " + object.getString("email") + "\n" +
+             "BIRTHDAY : " + object.getString("birthday") + "\n" +
+             "FRIENDS : " + object.getJSONObject("friends").getJSONObject("summary").getString("total_count")
+             );
+             */
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
 
 
- //Este metodo me permite ir a la pantalla de Login
- public void irALogin() {
- Intent intent = new Intent(Inicio.this, Login.class);
- intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
- startActivity(intent);
- }
+    //Este metodo me permite ir a la pantalla de Login
+    public void irALogin() {
+        Intent intent = new Intent(Inicio.this, Login.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+    }
 
- //Metodo que me permite cerrar sesion e ir a la pantalla de Login
- public void cerrarSesion(View view) {
- LoginManager.getInstance().logOut();
- irALogin();
+    //Metodo que me permite cerrar sesion e ir a la pantalla de Login
+    public void cerrarSesion() {
+        LoginManager.getInstance().logOut();
+        irALogin();
 
- }
+    }
 
 
 }
