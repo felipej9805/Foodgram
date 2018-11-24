@@ -36,6 +36,7 @@ public class Splash extends AppCompatActivity {
  irALogin();
  }
  */
+
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }

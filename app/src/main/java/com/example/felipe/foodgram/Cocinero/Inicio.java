@@ -1,6 +1,8 @@
-package com.example.felipe.foodgram;
+package com.example.felipe.foodgram.Cocinero;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentManager;
@@ -14,23 +16,32 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.felipe.foodgram.FeedFragment;
+import com.example.felipe.foodgram.Login;
+import com.example.felipe.foodgram.R;
+import com.example.felipe.foodgram.modelo.Usuario;
 import com.facebook.AccessToken;
 import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
 import com.facebook.login.LoginManager;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.w3c.dom.Text;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -39,36 +50,48 @@ import java.net.URL;
 public class Inicio extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    TextView prueba;
-    ImageView img_facebook;
     ImageView img_PerfilMenu;
     TextView tv_CorreoMenu;
     TextView tv_nombreUsuario;
+
+    FirebaseAuth auth;
+    FirebaseDatabase db;
+
+    DatabaseReference referencia;
+    DatabaseReference usuario;
+    Usuario actual;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_inicio);
-
-        prueba = findViewById(R.id.prueba);
-        img_facebook = (ImageView) findViewById(R.id.img_facebook);
-
-
-        //Token del inicio de sesión
+        db = FirebaseDatabase.getInstance();
+        auth = FirebaseAuth.getInstance();
 
 
+        //img_PerfilMenu = findViewById(R.id.img_PerfilMenu);
+
+        android.support.design.widget.NavigationView nav_view = findViewById(R.id.nav_view);
+        View v = nav_view.getHeaderView(0);
+        tv_nombreUsuario = v.findViewById(R.id.tv_nombreUsuario);
+        tv_CorreoMenu = v.findViewById(R.id.tv_CorreoMenu);
+        Log.e(">>>", "" + tv_nombreUsuario);
+
+        //Token del inicio de sesión para el Inicio con Facebook
+        int facebook = -1;
+        Bundle datos = getIntent().getExtras();
+
+        if (datos != null) {
+            facebook = getIntent().getExtras().getInt("facebook");
+        }
         AccessToken token = AccessToken.getCurrentAccessToken();
         if (token != null) {
-
             String accessToken = AccessToken.getCurrentAccessToken().getToken();
-
             GraphRequest request = GraphRequest.newMeRequest(AccessToken.getCurrentAccessToken(), new GraphRequest.GraphJSONObjectCallback() {
                 @Override
                 public void onCompleted(JSONObject object, GraphResponse response) {
-
                     Log.d("response", response.toString());
                     obtenerDatosFacebook(object);
-
                 }
             });
 
@@ -77,9 +100,56 @@ public class Inicio extends AppCompatActivity
             request.setParameters(parameters);
             request.executeAsync();
 
-        } else {
             Toast.makeText(getApplicationContext(), "BIENVENIDO", Toast.LENGTH_SHORT).show();
+        } else {
+            if (facebook == 1) {
+                Toast.makeText(getApplicationContext(), "Error", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(getApplicationContext(), "BIENVENIDO", Toast.LENGTH_SHORT).show();
+            }
         }
+
+
+        referencia = db.getReference().child("usuarios").child("cocinero").child(auth.getCurrentUser().getUid());
+
+
+        // Lo que hace es identificar el usuario y agregar el nombre y el correo al TextView
+        referencia.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                //Log.e(">>>", dataSnapshot.toString());
+                if (dataSnapshot.getValue() != null) {
+                    Usuario cocinero = dataSnapshot.getValue(Usuario.class);
+                    //Log.e("valores", usua.getNombre() + " ");
+                    tv_nombreUsuario.setText(cocinero.getNombre());
+                    tv_CorreoMenu.setText(cocinero.getEmail());
+                } else {
+                    DatabaseReference segundoIntento = db.getReference().child("usuarios").child("chef").child(auth.getCurrentUser().getUid());
+                    segundoIntento.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            Log.e(">>>", dataSnapshot.toString());
+                            if (dataSnapshot.getValue() != null) {
+                                Usuario chef = dataSnapshot.getValue(Usuario.class);
+                                tv_nombreUsuario.setText(chef.getNombre());
+                                tv_CorreoMenu.setText(chef.getEmail());
+
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                        }
+                    });
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
 
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -144,6 +214,9 @@ public class Inicio extends AppCompatActivity
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
+
+
+    //Segun el fragment seleccionado, me lleva al Fragment correspondiente
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
@@ -179,13 +252,9 @@ public class Inicio extends AppCompatActivity
         return true;
     }
 
-
     //Este metodo se encarga de obtener los datos de Facebook, como el correo, fecha, imagen y cantidad de amigos
     private void obtenerDatosFacebook(JSONObject object) {
         try {
-            img_PerfilMenu = findViewById(R.id.img_PerfilMenu);
-            tv_CorreoMenu = findViewById(R.id.tv_CorreoMenu);
-            tv_nombreUsuario = findViewById(R.id.tv_nombreUsuario);
 
             URL profile_picture = new URL("https://graph.facebook.com/" + object.get("id") + "/picture?width=150&height=150");
             Picasso.get().load(profile_picture.toString()).into(img_PerfilMenu);
@@ -194,13 +263,6 @@ public class Inicio extends AppCompatActivity
             tv_CorreoMenu.setText(object.getString("email"));
 
 
-            //Mostramos la información de prueba en el Inicio
-            /**
-             prueba.setText("EMAIL : " + object.getString("email") + "\n" +
-             "BIRTHDAY : " + object.getString("birthday") + "\n" +
-             "FRIENDS : " + object.getJSONObject("friends").getJSONObject("summary").getString("total_count")
-             );
-             */
         } catch (MalformedURLException e) {
             e.printStackTrace();
         } catch (JSONException e) {

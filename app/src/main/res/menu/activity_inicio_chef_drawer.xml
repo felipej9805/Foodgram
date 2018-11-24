@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view"
+    >
+
+    <group android:checkableBehavior="single"
+
+        >
+
+        <item
+            android:id="@+id/nav_FeedChef"
+            android:title="Feed" />
+        
+        <item
+            android:id="@+id/nav_miPerfilChef"
+            android:title="Mi perfil" />
+        <item
+            android:id="@+id/nav_MiPosterChef"
+            android:title="Mi poster" />
+        <item
+            android:id="@+id/nav_CalificacionChef"
+            android:title="Calificación" />
+
+
+
+    </group>
+
+
+
+    <item android:title="">
+        <menu>
+            <item
+                android:id="@+id/nav_CerrarSesionChef"
+                android:title="Cerrar Sesión" />
+
+        </menu>
+    </item>
+
+</menu>
