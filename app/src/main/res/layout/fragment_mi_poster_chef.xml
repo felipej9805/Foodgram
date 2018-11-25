@@ -2,12 +2,13 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:gravity="center_horizontal">
 
 
     <ImageView
         android:id="@+id/img_posterChef"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/logo"
         android:layout_margin="10dp"
@@ -22,15 +23,36 @@
         android:textColor="#000000"
         android:textSize="20dp"
         android:textStyle="bold"
-
-
         />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Estado actual"
+        android:layout_marginStart="220dp"
+        android:gravity="center_horizontal"
+        android:textSize="18sp"
+        />
+
+    <Button
+        android:id="@+id/estado"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/ic_estado_off"
+       />
+
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="10dp"
         >
 
         <TextView
@@ -82,9 +104,15 @@
 
     </LinearLayout>
 
+    <RatingBar
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_gravity="center_horizontal"
+        android:isIndicator="true"/>
+
 
     <Button
-
         style="@style/style_botonesRegistro"
         android:id="@+id/btn_publicarChef"
         android:layout_marginLeft="40dp"
@@ -92,7 +120,6 @@
         android:layout_gravity="center"
         android:layout_marginTop="40dp"
         android:text="PUBLICAR"
-
         android:textSize="20dp" />
 
 

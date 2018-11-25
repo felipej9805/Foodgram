@@ -18,6 +18,9 @@ public class MiPosterChef extends Fragment {
 
 
     Button btn_publicarChef;
+    Button btn_estado;
+    Boolean estadoActivo;
+    View vista;
 
 
     public MiPosterChef() {
@@ -28,14 +31,35 @@ public class MiPosterChef extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        estadoActivo=false;
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_mi_poster_chef, container, false);
+        vista=inflater.inflate(R.layout.fragment_mi_poster_chef, container, false);
+        btn_estado=vista.findViewById(R.id.estado);
+        //actualizar estado
+        btn_estado.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(estadoActivo) {
+                    btn_estado.setBackground(getResources().getDrawable(R.drawable.ic_estado_off));
+                    estadoActivo=false;
+                }else{
+                    btn_estado.setBackground(getResources().getDrawable(R.drawable.ic_estado_on));
+                    estadoActivo=true;
+                }
+            }
+        });
+
+        return vista;
 
 
     }
+
+
+
 }
