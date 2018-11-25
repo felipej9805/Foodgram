@@ -275,6 +275,7 @@ public class InicioChef extends AppCompatActivity
             mProgressDialog.setCancelable(false);
             mProgressDialog.show();
 
+
             path = UtilDomi.getPath(InicioChef.this, data.getData());
             Bitmap m = BitmapFactory.decodeFile(path);
             img_PerfilMenuChef.setImageBitmap(m);
@@ -297,6 +298,7 @@ public class InicioChef extends AppCompatActivity
                         @Override
                         public void onSuccess(Uri uri) {
                             Glide.with(InicioChef.this).load(uri).into(img_PerfilMenuChef);
+
                         }
                     });
 

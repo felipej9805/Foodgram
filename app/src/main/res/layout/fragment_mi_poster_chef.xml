@@ -86,6 +86,7 @@
     <Button
 
         style="@style/style_botonesRegistro"
+        android:id="@+id/btn_publicarChef"
         android:layout_marginLeft="40dp"
         android:layout_marginRight="40dp"
         android:layout_gravity="center"
