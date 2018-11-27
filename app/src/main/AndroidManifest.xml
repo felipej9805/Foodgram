@@ -13,9 +13,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Login">
-
-        </activity>
+        <activity android:name=".Login" />
         <activity android:name=".Registro" />
 
         <meta-data
@@ -38,9 +36,9 @@
                 <data android:scheme="@string/fb_login_protocol_scheme" />
             </intent-filter>
         </activity>
-        <activity android:name=".Gustos" />
+        <activity android:name=".Cocinero.Gustos" />
         <activity
-            android:name=".Inicio"
+            android:name=".Cocinero.Inicio"
             android:label="@string/title_activity_inicio"
             android:theme="@style/AppTheme" />
         <activity
@@ -51,9 +49,16 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
-
         </activity>
+        <activity
+            android:name=".Chef.InicioChef"
+            android:label="@string/title_activity_inicio_chef"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".Chef.PublicarChef"
+            android:label="@string/title_activity_publicar_chef"
+            android:theme="@style/AppTheme" />
+        <activity android:name=".Galeria"></activity>
     </application>
 
 </manifest>

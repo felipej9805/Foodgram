@@ -13,6 +13,8 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
+import com.example.felipe.foodgram.Chef.InicioChef;
+import com.example.felipe.foodgram.Cocinero.Inicio;
 import com.example.felipe.foodgram.modelo.Usuario;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -110,12 +112,20 @@ public class Registro extends AppCompatActivity {
                         reference.setValue(usuario);
                     }
 
-                    Intent i = new Intent(Registro.this, Inicio.class);
-                    startActivity(i);
-                    finish();
+                    if(rb_soyCocinero.isChecked()){
+                        Intent i = new Intent(Registro.this, Inicio.class);
+                        startActivity(i);
+                        finish();
+                    }else{
+                        Intent i = new Intent(Registro.this, InicioChef.class);
+                        startActivity(i);
+                        finish();
+                    }
+
 
                 } else {
-                    Toast.makeText(Registro.this, "" + task.getException(), Toast.LENGTH_SHORT).show();
+
+                 //   Toast.makeText(Registro.this, "" + task.getException(), Toast.LENGTH_SHORT).show();
 
                 }
 
@@ -137,7 +147,7 @@ public class Registro extends AppCompatActivity {
         boolean terminos = cb_terminos.isChecked();
 
         if (nombre != null && !nombre.isEmpty() && correo != null && !correo.isEmpty() && contrasena != null && !contrasena.isEmpty()
-                && confirContra != null && !confirContra.isEmpty()&&terminos
+                && confirContra != null && !confirContra.isEmpty()&& terminos == true
                 && rgTipo != -1) {
 
             if (contrasena.length() > 5) {

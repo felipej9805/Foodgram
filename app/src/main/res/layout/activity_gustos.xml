@@ -27,24 +27,32 @@
         android:id="@+id/checBox_Pollo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:buttonTint="#000000"
         android:text="Pollo" />
 
     <CheckBox
         android:id="@+id/checBox_Cerdo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Cerdo" />
+        android:buttonTint="#000000"
+        android:text="Cerdo"
+
+        />
 
     <CheckBox
         android:id="@+id/checBox_Pescado"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:buttonTint="#000000"
+
         android:text="Pescado" />
 
     <CheckBox
         android:id="@+id/checBox_Res"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+
+        android:buttonTint="#000000"
         android:text="Res" />
 
 
@@ -59,25 +67,33 @@
     <CheckBox
         android:id="@+id/checBox_Zanahoria"
         android:layout_width="match_parent"
+
         android:layout_height="wrap_content"
+        android:buttonTint="#000000"
         android:text="Zanahoria" />
 
     <CheckBox
         android:id="@+id/checBox_Tomate"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+
+        android:buttonTint="#000000"
         android:text="Tomate" />
 
     <CheckBox
         android:id="@+id/checBox_Cebolla"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:buttonTint="#000000"
+
         android:text="Cebolla" />
 
     <CheckBox
         android:id="@+id/checBox_Lechuga"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+
+        android:buttonTint="#000000"
         android:text="Lechuga" />
 
     <TextView
@@ -91,33 +107,43 @@
     <CheckBox
         android:id="@+id/checBox_Frijol"
         android:layout_width="match_parent"
+
         android:layout_height="wrap_content"
+        android:buttonTint="#000000"
         android:text="Frijol" />
 
     <CheckBox
         android:id="@+id/checBox_Lentejas"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:buttonTint="#000000"
+
         android:text="Lentejas" />
 
     <CheckBox
         android:id="@+id/checBox_Garbanzos"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+
+        android:buttonTint="#000000"
         android:text="Garbanzos" />
 
     <CheckBox
         android:id="@+id/checBox_Arvejas"
         android:layout_width="match_parent"
+
         android:layout_height="wrap_content"
+        android:buttonTint="#000000"
         android:text="Arvejas" />
 
 
     <Button
+        android:id="@+id/bt_continuar"
         style="@style/style_botonesRojos"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
+        android:onClick="GustosContinuar"
         android:text="CONTINUAR"
 
         />
