@@ -1,5 +1,6 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
 
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/ly_login"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -12,25 +13,27 @@
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/logo" />
+        android:background="@drawable/logofood" />
 
     <EditText
         android:id="@+id/et_email"
         style="@style/style_EditTextLogin"
         android:hint="Email"
-        android:inputType="textEmailAddress" />
+        android:inputType="textEmailAddress"
+        tools:fontFamily="sans-serif" />
 
     <EditText
         android:id="@+id/et_contraseña"
+        style="@style/style_EditTextLogin"
         android:hint="Contraseña"
         android:inputType="textPassword"
-        style="@style/style_EditTextLogin"
-        />
+        tools:fontFamily="sans-serif" />
 
     <Button
         android:id="@+id/bt_iniciarSesion"
         style="@style/style_botonesLogin"
         android:layout_marginTop="10dp"
+        android:fontFamily="sans-serif"
         android:text="Iniciar sesión" />
 
     <Button
@@ -50,10 +53,12 @@
         android:layout_marginTop="10dp"
 
         />
+
     <TextView
         style="@style/style_textViewLogin"
         android:layout_marginTop="20dp"
-        android:text="¿No tienes una cuenta?" />
+        android:text="¿No tienes una cuenta?"
+        tools:fontFamily="sans-serif" />
 
     <TextView
         android:id="@+id/tv_registrate"
@@ -61,6 +66,7 @@
         android:layout_marginTop="5dp"
         android:clickable="true"
         android:onClick="OnClick_registrarse"
-        android:text="Registrate" />
+        android:text="Registrate"
+        tools:fontFamily="sans-serif" />
 
 </LinearLayout>

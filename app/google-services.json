@@ -23,6 +23,22 @@
           }
         },
         {
+          "client_id": "430971390189-ghl88tou6l2kjjh1om45gqlmccff94rq.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.felipe.foodgram",
+            "certificate_hash": "680532168ac0cfb9c31b070b5cc66737d3668302"
+          }
+        },
+        {
+          "client_id": "430971390189-83iks3clleu82tr5oa06pqv0g6lue13e.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.felipe.foodgram",
+            "certificate_hash": "6569b4ac064b917fc246f131b37b68769b2e2794"
+          }
+        },
+        {
           "client_id": "430971390189-pjdtsdl0ggcqugde6nt99abhsvc9eea4.apps.googleusercontent.com",
           "client_type": 3
         }
