@@ -1,50 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:gravity="center_horizontal">
+    android:gravity="center_horizontal"
+    android:layout_margin="10dp"
+    >
 
 
     <ImageView
         android:id="@+id/img_posterChef"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/logo"
-        android:layout_margin="10dp"
+        android:adjustViewBounds="true"
         />
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         android:text="AGENDAR"
         android:textColor="#000000"
         android:textSize="20dp"
         android:textStyle="bold"
         />
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
 
-    <TextView
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Estado actual"
-        android:layout_marginStart="220dp"
-        android:gravity="center_horizontal"
-        android:textSize="18sp"
-        />
+        android:orientation="horizontal"
+        android:layout_marginRight="80dp"
+        >
 
-    <Button
-        android:id="@+id/estado"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:layout_marginBottom="16dp"
-        android:background="@drawable/ic_estado_off"
-       />
+        <Button
+            android:id="@+id/estado"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="16dp"
+            android:background="@drawable/ic_estado_off" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:text="Estado actual"
+            android:textSize="20sp"
+
+            android:textStyle="bold"
+            android:textColor="#000000"
+
+            />
 
     </LinearLayout>
 
@@ -118,7 +126,6 @@
         android:layout_marginLeft="40dp"
         android:layout_marginRight="40dp"
         android:layout_gravity="center"
-        android:layout_marginTop="40dp"
         android:text="PUBLICAR"
         android:textSize="20dp" />
 

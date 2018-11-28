@@ -1,3 +1,4 @@
+
 package com.example.felipe.foodgram.Chef;
 
 import android.Manifest;
@@ -154,19 +155,17 @@ public class InicioChef extends AppCompatActivity
         });
 
 
-
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
-
+/**
+ FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+ fab.setOnClickListener(new View.OnClickListener() {
+@Override public void onClick(View view) {
+Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+.setAction("Action", null).show();
+}
+});
+ */
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -272,9 +271,8 @@ public class InicioChef extends AppCompatActivity
 
             mProgressDialog.setTitle("Subiendo...");
             mProgressDialog.setMessage("Subiendo foto a tu perfil");
-            mProgressDialog.setCancelable(false);
+            mProgressDialog.setCancelable(true);
             mProgressDialog.show();
-
 
             path = UtilDomi.getPath(InicioChef.this, data.getData());
             Bitmap m = BitmapFactory.decodeFile(path);
@@ -284,7 +282,6 @@ public class InicioChef extends AppCompatActivity
             //Cargar las imagenes
             final StorageReference ref = storage.getReference().child("usuarios")
                     .child(auth.getCurrentUser().getUid());
-
 
 
             ref.putFile(data.getData()).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
@@ -299,6 +296,7 @@ public class InicioChef extends AppCompatActivity
                         public void onSuccess(Uri uri) {
                             Glide.with(InicioChef.this).load(uri).into(img_PerfilMenuChef);
 
+
                         }
                     });
 
@@ -307,19 +305,16 @@ public class InicioChef extends AppCompatActivity
             });
 
 
-
-
             /**
-            ref.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                @Override
-                public void onSuccess(Uri uri) {
-                    Glide.with(context).load(uri).into(img_PerfilMenuChef);
+             ref.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override public void onSuccess(Uri uri) {
+            Glide.with(context).load(uri).into(img_PerfilMenuChef);
 
 
-                }
+            }
             });
 
-            */
+             */
         }
 
     }

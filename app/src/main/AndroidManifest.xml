@@ -54,11 +54,9 @@
             android:name=".Chef.InicioChef"
             android:label="@string/title_activity_inicio_chef"
             android:theme="@style/AppTheme" />
-        <activity
-            android:name=".Chef.PublicarChef"
-            android:label="@string/title_activity_publicar_chef"
-            android:theme="@style/AppTheme" />
-        <activity android:name=".Galeria"></activity>
+
+
+        <activity android:name=".Chef.PublicarChef"></activity>
     </application>
 
 </manifest>
