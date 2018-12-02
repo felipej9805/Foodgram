@@ -12,8 +12,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
@@ -22,6 +25,8 @@ import com.example.felipe.foodgram.R;
 import com.example.felipe.foodgram.util.UtilDomi;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -36,14 +41,20 @@ public class PublicarChef extends AppCompatActivity {
     private Button btn_subir;
     private ProgressDialog dialog;
     FirebaseAuth auth;
-
+    FirebaseDatabase db;
     FirebaseStorage storage;
-
 
     ImageView img_atras;
     ImageView img_receta;
+    Spinner spincat;
+    Button btn_publicar;
+    EditText txt_nombrereceta;
+    EditText txt_preparacion;
+    EditText txt_ingredientes;
+    String[] categorias = {"Seleccione", "Arroces", "Pasta y Pizza", "Verduras", "Sopas", "Postres"};
 
     private String path;
+    private Publicacion publicacion;
 
 
     @Override
@@ -52,12 +63,20 @@ public class PublicarChef extends AppCompatActivity {
         setContentView(R.layout.activity_publicar_chef);
 
         auth = FirebaseAuth.getInstance();
+        db = FirebaseDatabase.getInstance();
         btn_subir = findViewById(R.id.btn_subir);
         storage = FirebaseStorage.getInstance();
         dialog = new ProgressDialog(this);
 
         img_atras = findViewById(R.id.img_atras);
         img_receta = findViewById(R.id.img_receta);
+        txt_nombrereceta = findViewById(R.id.id_nombrereceta);
+        txt_preparacion = findViewById(R.id.id_preparacion);
+        txt_ingredientes = findViewById(R.id.id_ingredientes);
+        spincat = findViewById(R.id.id_spincat);
+        btn_publicar = findViewById(R.id.btn_publicar);
+        spincat.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, categorias));
+
 
         ActivityCompat.requestPermissions(this, new String[]{
                 Manifest.permission.WRITE_EXTERNAL_STORAGE,
@@ -86,7 +105,25 @@ public class PublicarChef extends AppCompatActivity {
             }
         });
 
+        btn_publicar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
+                if(!txt_nombrereceta.getText().toString().equals("") && !spincat.getSelectedItem().toString().equals("Seleccione") && !txt_ingredientes.getText().toString().equals("") && !txt_preparacion.getText().toString().equals("")){
+
+                    publicacion = new Publicacion(path,txt_nombrereceta.getText().toString(),spincat.getSelectedItem().toString(),txt_preparacion.getText().toString(),txt_ingredientes.getText().toString());
+                    DatabaseReference rf = db.getReference().child("publicaciones").push();
+                    rf.setValue(publicacion);
+
+                    Toast.makeText(PublicarChef.this, "Se ha subido tu publicación", Toast.LENGTH_SHORT).show();
+
+                    actualizarCampos();
+                }
+                else{
+                    Toast.makeText(PublicarChef.this, "Por favor, asegurese de que todos los campos estén llenos", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
 
     }
 
@@ -94,7 +131,6 @@ public class PublicarChef extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
 
         if (requestCode == REQUEST_GALLERY && resultCode == RESULT_OK) {
-
 
             dialog.setTitle("Subiendo...");
             dialog.setMessage("Subiendo foto a tu perfil");
@@ -125,5 +161,12 @@ public class PublicarChef extends AppCompatActivity {
                 }
             });
         }
+    }
+
+    public void actualizarCampos(){
+        txt_nombrereceta.setText("");
+        spincat.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, categorias));
+        txt_preparacion.setText("");
+        txt_ingredientes.setText("");
     }
 }

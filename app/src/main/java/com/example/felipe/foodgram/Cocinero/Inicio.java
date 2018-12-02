@@ -214,8 +214,6 @@ public class Inicio extends AppCompatActivity
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
-
-
     //Segun el fragment seleccionado, me lleva al Fragment correspondiente
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
