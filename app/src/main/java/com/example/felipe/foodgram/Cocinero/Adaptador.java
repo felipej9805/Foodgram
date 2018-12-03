@@ -89,16 +89,17 @@ public class Adaptador extends BaseAdapter {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                            Usuario guardado=snapshot.getValue(Usuario.class);
+                            Log.e("Arreglo",""+usuariosChef.size());
+                            String nombre=usuariosChef.get(position).getNombre();
+                            String email=usuariosChef.get(position).getEmail();
+                            String telef=usuariosChef.get(position).getTelefono();
+                            //Usuario guardado=snapshot.getValue(Usuario.class);
 
-                            String name=guardado.getNombre();
-                            String correo=guardado.getEmail();
-                            Log.e("Datos",""+ name+ ""+correo);
+                            Log.e("Datos",""+ nombre+ ""+email);
 
-                            tv_nombreChef.setText(name);
-                            //tv_telefono.setText(usuariosChef.get(position).getTelefono());
-                            tv_correo.setText(correo);
-                            //Log.e("Datos:", "" + tv_nombreChef.toString() + "" + tv_correo.toString());
+                            tv_nombreChef.setText(nombre);
+                            tv_correo.setText(email);
+                            tv_telefono.setText(telef);
 
                         }
 

@@ -45,14 +45,25 @@ public class ChefFragment extends Fragment {
         //storage = FirebaseStorage.getInstance();
 
        // final StorageReference refer= storage.getReference().child("usuarios");
-        DatabaseReference listchef=db.getReference().child("usuarios").child("chef");
+        final DatabaseReference listchef=db.getReference().child("usuarios").child("chef");
 
         listchef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for(final DataSnapshot snapshot : dataSnapshot.getChildren())
                 if (dataSnapshot.getValue() != null) {
-                    Usuario chef = dataSnapshot.getValue(Usuario.class);
-                        adaptador.agregarChef(chef);
+                    listchef.child(snapshot.getKey()).addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            Usuario chef = snapshot.getValue(Usuario.class);
+                            adaptador.agregarChef(chef);
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                        }
+                    });
                 }
 
             }

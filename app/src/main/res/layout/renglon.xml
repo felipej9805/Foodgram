@@ -25,10 +25,10 @@
 
         <TextView
             android:id="@+id/tv_renglon_nombreChef"
-            android:layout_width="wrap_content"
+            android:layout_width="119dp"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
-            android:layout_marginLeft="60dp"
+            android:layout_marginLeft="20dp"
             android:layout_marginRight="60dp"
             android:layout_marginTop="10dp"
             android:paddingBottom="0dp"
@@ -38,7 +38,7 @@
 
         <TextView
             android:id="@+id/tv_renglon_disponibilidadChef"
-            android:layout_width="wrap_content"
+            android:layout_width="99dp"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_alignTop="@+id/renglon_img"
@@ -59,11 +59,9 @@
 
         <TextView
             android:id="@+id/tv_renglon_correo"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:layout_marginLeft="60dp"
-            android:layout_marginRight="60dp"
+            android:layout_marginRight="20dp"
             android:layout_marginTop="20dp"
             android:layout_weight="1"
             android:paddingBottom="0dp"
@@ -73,18 +71,15 @@
 
         <TextView
             android:id="@+id/tv_renglon_telefono"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:layout_marginLeft="60dp"
-            android:layout_marginRight="60dp"
+            android:layout_marginRight="20dp"
             android:layout_marginTop="20dp"
             android:layout_weight="1"
             android:paddingBottom="0dp"
             android:paddingLeft="15dp"
             android:paddingRight="15dp"
-            android:paddingTop="0dp"
-            />
+            android:paddingTop="0dp" />
 
     </LinearLayout>
 
