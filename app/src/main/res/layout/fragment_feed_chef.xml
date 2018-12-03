@@ -6,9 +6,15 @@
     tools:context=".FeedFragmentChef">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
+
+
+    <ListView
+        android:id="@+id/publicaciones_chef"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+
+        android:layout_height="match_parent">
+
+
+    </ListView>
 
 </FrameLayout>

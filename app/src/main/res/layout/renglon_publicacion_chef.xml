@@ -1,9 +1,8 @@
-
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    >
+    android:orientation="vertical">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -11,8 +10,9 @@
 
 
         <ImageView
+            android:id="@+id/img_re"
             android:layout_width="120dp"
-            android:layout_height="120dp"
+            android:layout_height="110dp"
             android:background="@drawable/logo"
 
             />
@@ -20,33 +20,52 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
             android:layout_weight="40"
-            >
+            android:orientation="vertical">
+
             <TextView
+                android:id="@+id/titulo_receta"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Titulo de la Receta"
+                android:text="Titulo de la Receta" />
+
+
+            <TextView
+                android:id="@+id/usuario_receta"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="Usuario"
+
                 />
 
             <TextView
+                android:id="@+id/categoria_receta"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="Titulo de la Receta"
+                android:text="Categoria"
+
+                />
+
+            <TextView
+                android:id="@+id/preparacion_receta"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="Preparacion"
+
+                />
+
+            <TextView
+                android:id="@+id/ingrediente_receta"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="Ingredientes"
+
                 />
 
         </LinearLayout>
 
 
-
     </LinearLayout>
-
-
-
-
-
-
-
 
 
 </LinearLayout>

@@ -12,6 +12,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Build;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.NotificationCompat;
@@ -24,20 +25,30 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.felipe.foodgram.Chef.InicioChef;
 import com.example.felipe.foodgram.R;
+import com.example.felipe.foodgram.modelo.Usuario;
 import com.example.felipe.foodgram.util.UtilDomi;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.util.ArrayList;
 
 
 public class PublicarChef extends AppCompatActivity {
@@ -58,6 +69,9 @@ public class PublicarChef extends AppCompatActivity {
     FirebaseDatabase db;
     FirebaseStorage storage;
 
+    DatabaseReference referencia;
+
+
     ImageView img_atras;
     ImageView img_receta;
     Spinner spincat;
@@ -67,8 +81,15 @@ public class PublicarChef extends AppCompatActivity {
     EditText txt_ingredientes;
     String[] categorias = {"Seleccione", "Arroces", "Pasta y Pizza", "Verduras", "Sopas", "Postres"};
 
+    TextView tv_ListaIngredientes;
+
     private String path;
     private Publicacion publicacion;
+    private Receta receta;
+
+    private Usuario usuarioChef;
+
+    ArrayList<Ingrediente> ListaIngredientes;
 
 
     @Override
@@ -80,7 +101,7 @@ public class PublicarChef extends AppCompatActivity {
         db = FirebaseDatabase.getInstance();
         btn_subir = findViewById(R.id.btn_subir);
         storage = FirebaseStorage.getInstance();
-        dialog = new ProgressDialog(this);
+        //dialog = new ProgressDialog(this);
 
         img_atras = findViewById(R.id.img_atras);
         img_receta = findViewById(R.id.img_receta);
@@ -91,6 +112,7 @@ public class PublicarChef extends AppCompatActivity {
         btn_publicar = findViewById(R.id.btn_publicar);
         spincat.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, categorias));
 
+        tv_ListaIngredientes = findViewById(R.id.tv_ListaIngredientes);
 
         ActivityCompat.requestPermissions(this, new String[]{
                 Manifest.permission.WRITE_EXTERNAL_STORAGE,
@@ -98,6 +120,28 @@ public class PublicarChef extends AppCompatActivity {
         }, 11);
 
 
+        referencia = db.getReference().child("usuarios").child("chef").child(auth.getCurrentUser().getUid());
+        final StorageReference refer = storage.getReference().child("usuarios")
+                .child(auth.getCurrentUser().getUid());
+        referencia.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.getValue() != null) {
+                    usuarioChef = dataSnapshot.getValue(Usuario.class);
+                    //Log.e("valores", usua.getNombre() + " ");
+
+
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+
+        //Imagen hacia atras
         img_atras.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -106,6 +150,8 @@ public class PublicarChef extends AppCompatActivity {
             }
         });
 
+
+        //Boton que me permite seleccionar la imagen
         btn_subir.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -123,15 +169,43 @@ public class PublicarChef extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                if (!txt_nombrereceta.getText().toString().equals("") && !spincat.getSelectedItem().toString().equals("Seleccione") && !txt_ingredientes.getText().toString().equals("") && !txt_preparacion.getText().toString().equals("")) {
+                if (!txt_nombrereceta.getText().toString().equals("") && !spincat.getSelectedItem().toString().equals("Seleccione") && !tv_ListaIngredientes.getText().toString().equals("") && !txt_preparacion.getText().toString().equals("")) {
 
-                    publicacion = new Publicacion(path, txt_nombrereceta.getText().toString(), spincat.getSelectedItem().toString(), txt_preparacion.getText().toString(), txt_ingredientes.getText().toString());
-                    DatabaseReference rf = db.getReference().child("publicaciones").push();
-                    rf.setValue(publicacion);
+                    if (path != null) {
+                        String nombreReceta = txt_nombrereceta.getText().toString();
+                        String categoriaReceta = spincat.getSelectedItem().toString();
+                        String preparacion = txt_preparacion.getText().toString();
 
-                    Toast.makeText(PublicarChef.this, "Se ha subido tu publicación", Toast.LENGTH_SHORT).show();
 
-                    actualizarCampos();
+                        final DatabaseReference rf = db.getReference().child("publicaciones").push();
+
+                        Receta recetaNueva = new Receta(usuarioChef, rf.getKey(), nombreReceta, rf.getKey(), categoriaReceta, preparacion, ListaIngredientes);
+
+                        publicacion = new Publicacion(rf.getKey(), recetaNueva);
+
+                        rf.setValue(publicacion);
+
+                        try {
+
+
+                            StorageReference reference = storage.getReference().child("recetas").child(auth.getCurrentUser().getUid()).child(publicacion.getUid());
+                            FileInputStream file = new FileInputStream(new File(path));
+
+                            refer.putStream(file);
+                            Toast.makeText(PublicarChef.this, "Se ha subido tu publicación", Toast.LENGTH_SHORT).show();
+                            actualizarCampos();
+
+
+                        } catch (FileNotFoundException e) {
+
+                        }
+
+                    } else {
+
+                        Toast.makeText(PublicarChef.this, "Por favor cargue una imagen", Toast.LENGTH_SHORT).show();
+
+                    }
+
 
                     manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 
@@ -172,39 +246,63 @@ public class PublicarChef extends AppCompatActivity {
 
     }
 
+    //Metodo que se encarga de agregar el ingrediente
+    public void agregarIngrediente(View view) {
+        String nombreIngrediente = txt_ingredientes.getText().toString();
+
+        String cadena = tv_ListaIngredientes.getText().toString();
+
+
+        if (cadena.equals("")) {
+            tv_ListaIngredientes.setText(nombreIngrediente + ", ");
+            txt_ingredientes.setText("");
+        } else {
+
+            tv_ListaIngredientes.setText(cadena + nombreIngrediente + ", ");
+            txt_ingredientes.setText("");
+
+
+        }
+
+        Ingrediente ingrediente1 = new Ingrediente("", nombreIngrediente);
+        ListaIngredientes = new ArrayList<Ingrediente>();
+
+        ListaIngredientes.add(ingrediente1);
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
 
         if (requestCode == REQUEST_GALLERY && resultCode == RESULT_OK) {
 
-            dialog.setTitle("Subiendo...");
-            dialog.setMessage("Subiendo foto a tu perfil");
-            dialog.setCancelable(false);
-            dialog.show();
-
+            /**
+             dialog.setTitle("Subiendo...");
+             dialog.setMessage("Subiendo foto");
+             dialog.setCancelable(false);
+             dialog.show();
+             */
             path = UtilDomi.getPath(PublicarChef.this, data.getData());
             Bitmap m = BitmapFactory.decodeFile(path);
             img_receta.setImageBitmap(m);
 
+/**
+ final StorageReference reference = storage.getReference().child("recetas").child(auth.getCurrentUser().getUid()).child(data.getData().getLastPathSegment());
 
-            final StorageReference reference = storage.getReference().child("recetas").child(auth.getCurrentUser().getUid()).child(data.getData().getLastPathSegment());
+ reference.putFile(data.getData()).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+@Override public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+dialog.dismiss();
 
-            reference.putFile(data.getData()).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                @Override
-                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                    dialog.dismiss();
+reference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+@Override public void onSuccess(Uri uri) {
+Glide.with(PublicarChef.this).load(uri).into(img_receta);
 
-                    reference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                        @Override
-                        public void onSuccess(Uri uri) {
-                            Glide.with(PublicarChef.this).load(uri).into(img_receta);
+}
+});
 
-                        }
-                    });
-
-                    Toast.makeText(PublicarChef.this, "Imagen subida con éxito", Toast.LENGTH_SHORT).show();
-                }
-            });
+Toast.makeText(PublicarChef.this, "Imagen subida con éxito", Toast.LENGTH_SHORT).show();
+}
+});
+ */
         }
     }
 

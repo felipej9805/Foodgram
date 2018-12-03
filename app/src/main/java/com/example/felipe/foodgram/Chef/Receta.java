@@ -15,7 +15,7 @@ public class Receta {
 
     private String nombreReceta;
 
-    private ImageView imagenReceta;
+    private String imagenReceta;
 
     //La categoria es si la receta es postre , postre, ensalada, sopa, etc
     private String categoriaReceta;
@@ -31,7 +31,7 @@ public class Receta {
     }
 
     //Constructor
-    public Receta(Usuario chef, String uid, String nombreReceta, ImageView imagenReceta,
+    public Receta(Usuario chef, String uid, String nombreReceta, String imagenReceta,
                   String categoriaReceta, String preparacionReceta, ArrayList<Ingrediente> listaIngredientesReceta) {
         this.chef = chef;
         this.uid = uid;
@@ -67,11 +67,11 @@ public class Receta {
         this.nombreReceta = nombreReceta;
     }
 
-    public ImageView getImagenReceta() {
+    public String getImagenReceta() {
         return imagenReceta;
     }
 
-    public void setImagenReceta(ImageView imagenReceta) {
+    public void setImagenReceta(String imagenReceta) {
         this.imagenReceta = imagenReceta;
     }
 
