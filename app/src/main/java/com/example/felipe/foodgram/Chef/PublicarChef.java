@@ -1,13 +1,20 @@
 package com.example.felipe.foodgram.Chef;
 
 import android.Manifest;
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.Build;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.NotificationCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -36,6 +43,13 @@ import com.google.firebase.storage.UploadTask;
 public class PublicarChef extends AppCompatActivity {
 
     private static final int REQUEST_GALLERY = 101;
+
+    public static final String CHANNEL_ID = "aplicaciones20182";
+    public static final String CHANNEL_NAME = "Aplicaciones-2018-2";
+    public static final int CHANNEL_IMPORTANCE = NotificationManager.IMPORTANCE_HIGH;
+
+    int notificacion = 1;
+    NotificationManager manager;
 
 
     private Button btn_subir;
@@ -109,17 +123,48 @@ public class PublicarChef extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                if(!txt_nombrereceta.getText().toString().equals("") && !spincat.getSelectedItem().toString().equals("Seleccione") && !txt_ingredientes.getText().toString().equals("") && !txt_preparacion.getText().toString().equals("")){
+                if (!txt_nombrereceta.getText().toString().equals("") && !spincat.getSelectedItem().toString().equals("Seleccione") && !txt_ingredientes.getText().toString().equals("") && !txt_preparacion.getText().toString().equals("")) {
 
-                    publicacion = new Publicacion(path,txt_nombrereceta.getText().toString(),spincat.getSelectedItem().toString(),txt_preparacion.getText().toString(),txt_ingredientes.getText().toString());
+                    publicacion = new Publicacion(path, txt_nombrereceta.getText().toString(), spincat.getSelectedItem().toString(), txt_preparacion.getText().toString(), txt_ingredientes.getText().toString());
                     DatabaseReference rf = db.getReference().child("publicaciones").push();
                     rf.setValue(publicacion);
 
                     Toast.makeText(PublicarChef.this, "Se ha subido tu publicación", Toast.LENGTH_SHORT).show();
 
                     actualizarCampos();
-                }
-                else{
+
+                    manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+
+                    //Manejar notificaciones en OREO
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                        //Se tiene que definir un Notficacion Channel
+                        //Crear 3 constantes: CHANNEL_ID, CHANNEL_NAME, CHANNEL_IMPORTANCE
+                        NotificationChannel canal = new NotificationChannel(CHANNEL_ID, CHANNEL_NAME, CHANNEL_IMPORTANCE);
+                        manager.createNotificationChannel(canal);
+                    }
+
+
+                    NotificationCompat.Builder builder;
+                    manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+
+
+                    InicioChef inicio = new InicioChef();
+
+                    int icono = R.mipmap.ic_launcher_round;
+                    Intent intent = new Intent(PublicarChef.this, InicioChef.class);
+                    PendingIntent pendingIntent = PendingIntent.getActivity(PublicarChef.this, 0, intent, 0);
+
+                    builder = new NotificationCompat.Builder(PublicarChef.this, CHANNEL_ID).setContentIntent(pendingIntent).
+                            setSmallIcon(icono).
+                            setContentTitle(txt_nombrereceta.getText().toString() + "").
+                            setContentText("Deliciosa nueva receta, corre a enterarte").
+                            setVibrate(new long[]{100, 250, 100, 500}).
+                            setAutoCancel(true).
+                            setPriority(NotificationCompat.PRIORITY_HIGH);
+                    manager.notify(1, builder.build());
+
+
+                } else {
                     Toast.makeText(PublicarChef.this, "Por favor, asegurese de que todos los campos estén llenos", Toast.LENGTH_SHORT).show();
                 }
             }
@@ -163,10 +208,11 @@ public class PublicarChef extends AppCompatActivity {
         }
     }
 
-    public void actualizarCampos(){
+    public void actualizarCampos() {
         txt_nombrereceta.setText("");
         spincat.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, categorias));
         txt_preparacion.setText("");
         txt_ingredientes.setText("");
+        img_receta.setImageBitmap(null);
     }
 }
