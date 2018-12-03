@@ -29,6 +29,7 @@ public class Registro extends AppCompatActivity {
     EditText et_regisCorreo;
     EditText et_regisContrasena;
     EditText et_regisConfirContrasena;
+    EditText et_telefono;
     CheckBox cb_terminos;
 
     RadioGroup rgRegisTipo;
@@ -74,15 +75,16 @@ public class Registro extends AppCompatActivity {
                 final String correo = et_regisCorreo.getText().toString();
                 final String contrasena = et_regisContrasena.getText().toString();
                 final String confirContra = et_regisConfirContrasena.getText().toString();
+                final String telefono = et_telefono.getText().toString();
                 boolean chef = rb_soyChef.isChecked();
                 boolean cocinero = rb_soyCocinero.isChecked();
                 final boolean terminos = cb_terminos.isChecked();
                 
                 if (chef) {
-                    Usuario usuario = new Usuario("", "chef", nombre, correo);
+                    Usuario usuario = new Usuario("", "chef", nombre, correo, telefono);
                     registrarUsuario(usuario);
                 } else if (cocinero) {
-                    Usuario usuario = new Usuario("", "cocinero", nombre, correo);
+                    Usuario usuario = new Usuario("", "cocinero", nombre, correo, telefono);
                     registrarUsuario(usuario);
                 }
 
@@ -140,13 +142,15 @@ public class Registro extends AppCompatActivity {
         String correo = et_regisCorreo.getText().toString();
         String contrasena = et_regisContrasena.getText().toString();
         String confirContra = et_regisConfirContrasena.getText().toString();
+        String telefono = et_telefono.getText().toString();
         int rgTipo = rgRegisTipo.getCheckedRadioButtonId();
         boolean chef = rb_soyChef.isChecked();
         boolean cocinero = rb_soyCocinero.isChecked();
 
         boolean terminos = cb_terminos.isChecked();
 
-        if (nombre != null && !nombre.isEmpty() && correo != null && !correo.isEmpty() && contrasena != null && !contrasena.isEmpty()
+        if (nombre != null && !nombre.isEmpty() && correo != null && !correo.isEmpty() &&  telefono != null && !telefono.isEmpty()
+                &&contrasena != null && !contrasena.isEmpty()
                 && confirContra != null && !confirContra.isEmpty()&& terminos == true
                 && rgTipo != -1) {
 
@@ -163,6 +167,7 @@ public class Registro extends AppCompatActivity {
                         Log.e("terminos",
                                 nombre + "-" +
                                         correo + "-" +
+                                        telefono + "-" +
                                         contrasena + "-" +
                                         confirContra + "-" +
                                         rgTipo + "-" +
@@ -178,6 +183,7 @@ public class Registro extends AppCompatActivity {
                     Log.e("iguales",
                             nombre + "-" +
                                     correo + "-" +
+                                    telefono + "-" +
                                     contrasena + "-" +
                                     confirContra + "-" +
                                     rgTipo + "-" +
@@ -193,6 +199,7 @@ public class Registro extends AppCompatActivity {
                 Log.e(">6",
                         nombre + "-" +
                                 correo + "-" +
+                                telefono + "-" +
                                 contrasena + "-" +
                                 confirContra + "-" +
                                 rgTipo + "-" +
@@ -209,6 +216,7 @@ public class Registro extends AppCompatActivity {
             Log.e("datos",
                     nombre + "-" +
                             correo + "-" +
+                            telefono + "-" +
                             contrasena + "-" +
                             confirContra + "-" +
                             rgTipo + "-" +
@@ -228,6 +236,7 @@ public class Registro extends AppCompatActivity {
 
         et_regisNombre = (EditText) findViewById(R.id.et_regisNombre);
         et_regisCorreo = (EditText) findViewById(R.id.et_regisCorreo);
+        et_telefono =findViewById(R.id.et_telefono);
         et_regisContrasena = (EditText) findViewById(R.id.et_regisContrasena);
         et_regisConfirContrasena = (EditText) findViewById(R.id.et_regisConfirContrasena);
 

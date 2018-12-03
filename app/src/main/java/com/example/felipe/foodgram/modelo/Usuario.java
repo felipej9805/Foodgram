@@ -5,6 +5,7 @@ public class Usuario {
     private String uid;
     private String nombre;
     private String email;
+    private String telefono;
     // Define si el usuario es Cocinero o Chef
     private String tipo;
 
@@ -14,11 +15,12 @@ public class Usuario {
     }
 
     //Metodo Constructor
-    public Usuario(String uid, String tipo ,String nombre, String email) {
+    public Usuario(String uid, String tipo ,String nombre, String email, String telefono) {
         this.uid = uid;
         this.tipo = tipo;
         this.nombre = nombre;
         this.email = email;
+        this.telefono = telefono;
     }
 
 
@@ -53,5 +55,13 @@ public class Usuario {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getTelefono() {
+        return telefono;
+    }
+
+    public void setTelefono(String telef) {
+        this.telefono = telef;
     }
 }

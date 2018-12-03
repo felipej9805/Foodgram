@@ -19,6 +19,12 @@
         android:hint="Email"
         android:inputType="textEmailAddress"
         />
+    <EditText
+        android:id="@+id/et_telefono"
+        style="@style/style_tvRegistros"
+        android:hint="Teléfono"
+        android:inputType="phone"
+        android:singleLine="true"/>
 
     <EditText
         android:id="@+id/et_regisContrasena"
